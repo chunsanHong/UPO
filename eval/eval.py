@@ -197,7 +197,6 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model_path", type=str, default="/data1/shared/LLaDA-8B-Instruct/")
     parser.add_argument("--remasking", type=str, default="low_confidence")
-    parser.add_argument("--few_shot", type=int, default=0)
     parser.add_argument("--batch_size", type=int, default=4)
     parser.add_argument("--bim_size", type=int, default=5)
     parser.add_argument(
@@ -240,7 +239,6 @@ if __name__ == "__main__":
     dataset = DATASET_MAP[args.dataset](
         tokenizer,
         subsample=num_evals[args.dataset],
-        num_examples=args.few_shot,
         add_reasoning=True,  # prefill for all models
     )
 
@@ -256,9 +254,6 @@ if __name__ == "__main__":
         model_name = model_name[-2] + "_" + model_name[-1]
     else:
         model_name = "instruct" if "Instruct" in args.model_path else "base"
-
-    if args.few_shot > 0:
-        model_name = model_name + f"_fs{args.few_shot}"
 
     if len(args.suffix) > 0:
         model_name = model_name + f"_{args.suffix}"

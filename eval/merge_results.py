@@ -56,7 +56,7 @@ def parse_args():
     p.add_argument(
         "--result_path",
         type=str,
-        default="eval/sudoku_test",
+        default="eval/sudoku_UPO",
         help="Path to the evaluation results directory (e.g., eval/sudoku_test)",
     )
     return p.parse_args()

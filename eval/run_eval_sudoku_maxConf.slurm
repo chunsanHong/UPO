@@ -31,7 +31,7 @@ TASKS=("sudoku")
 
 MODEL_PATH="GSAI-ML/LLaDA-8B-Instruct"
 EXTRA_PATH="/scratch/slurm-user3/chunsan/reproducible_upo/slurm_scripts/checkpoints/sudoku_pretrain+CE_1e-4_Temp0.8_1/checkpoint-3500/extra_head.pt"
-out_dir="eval/sudoku_test"
+out_dir="eval/sudoku_confidence"
 
 CUDA_VISIBLE_DEVICES=$GPU_LIST \
 srun accelerate launch \
@@ -42,5 +42,4 @@ srun accelerate launch \
     --batch_size 1 \
     --output_dir "$out_dir" \
     --model_path "$MODEL_PATH" \
-    --remasking "extra_head" \
-    --extra_path "$EXTRA_PATH"
+    --remasking "low_confidence" \

@@ -51,21 +51,28 @@ For example,
 In slurm script configurations, note that (pretrain+CE)/(pretrain+KL)/(Random+TopK+KL) refer to max-confidence/softmax-confidence/Top-K confidence realization respectively. Additionally, (pretrain w/o reg)/(random w/o reg) are for ablation.
 
 ## Evaluation
-Run the following command to save results for SUDOKU test set:
+For evaluation of max-confidence realization of UPO, run the following command to save results for SUDOKU test set:
 ```bash
 cd eval
-sbatch run_eval_sudoku.slurm
+sbatch run_eval_sudoku_UPO.slurm
 ```
 with modifying "EXTRA_PATH=.." to your model path.
+For evaluation of heuristic max-confidence, run the following command to save results for SUDOKU test set:
+```bash
+cd eval
+sbatch run_eval_sudoku_maxConf.slurm
+```
+Or you can modify --remasking configuration as margin, entropy, extra_bim (Top-K realization), or else.
+
 For evaluation, run the following command:
 ```bash
-python merge_results.py
+python merge_results.py --result_path <your_result_dir>
 ```
 
 **DO NOT** change the batch size (default=1), since we observed a performance drop when changing the batch size. When we conducted this research, existing discrete diffusion GRPO-style papers did not consider adding leading padding during training. As a result, if you change the batch size to a value other than 1 during evaluation, we found that the leading padding can negatively affect performance and lead to a performance drop.
 
 ## TODO
-We currently release SUDOKU training code with softmax/max-confidence/Top-K realization for UPO. The pre-training code for the unmasking policy selection module and training code for other benchmarks will be released later yourself. If you want to implement further, please note that we simply performed supervised training with cross-entropy loss for pre-training. Refer to https://github.com/kulinshah98/llm-reasoning-logic-puzzles for Zebra dataset, and https://github.com/dllm-reasoning/d1 & https://github.com/maple-research-lab/LLaDOU for other benchmarks & reward function implementations.
+We currently release SUDOKU training code with softmax/max-confidence/Top-K realization for UPO. The pre-training code for the unmasking policy selection module and training code for other benchmarks will be released later. If you want to implement further yourself, please note that we simply performed supervised training with cross-entropy loss for pre-training, with dataset constructed by training data of SUDOKU dataset & LLaDA generations. Refer to https://github.com/kulinshah98/llm-reasoning-logic-puzzles for Zebra dataset, and https://github.com/dllm-reasoning/d1 & https://github.com/maple-research-lab/LLaDOU for other benchmarks & reward function implementations.
 
 ## Acknowledgements
 - [d1: Scaling Reasoning in Diffusion Large Language Models via Reinforcement Learning](https://github.com/dllm-reasoning/d1): Helped us to create GRPO-style training & evaluation codes.

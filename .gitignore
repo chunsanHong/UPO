@@ -1,0 +1,11 @@
+slurm_scripts/checkpoints
+slurm_scripts/out
+slurm_scripts/past_scripts
+slurm_scripts/wandb
+slurm_scripts/sudoku_for_test.slurm
+eval/eval
+eval/__pycache__
+eval/ultra.err
+eval/ultra.out
+pretrained_weights
+__pycache__
